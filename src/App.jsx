@@ -1403,7 +1403,7 @@ export default function Portfolio() {
         <div className="reveal" style={{ transitionDelay: "0.2s" }}>
           <div className="about-stats">
             {[
-              ["2+", "Years in Cyber Security"], ["10+", "Security Projects"],
+              ["1+", "Years in Cyber Security"], ["2+", "Years in Coading"],
               ["30+", "CTF Challenges Solved"], ["∞", "Always Hunting"],
             ].map(([n, l]) => (
               <div className="stat-card" key={l}>
