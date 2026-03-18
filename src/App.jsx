@@ -1168,7 +1168,7 @@ function MailSection() {
           <div className="mail-field">
             <label className="mail-label">Name *</label>
             <input
-              className="mail-input" name="name" placeholder="Harsh Kumar"
+              className="mail-input" name="name" placeholder="Piyush Kumar"
               value={form.name} onChange={handleChange}
             />
           </div>
