@@ -1323,7 +1323,7 @@ export default function Portfolio() {
 
       {/* NAV */}
       <nav>
-        <div className="nav-logo">PK<span>.</span>Kumar</div>
+        <div className="nav-logo">P<span>.</span>Kumar</div>
         <ul className="nav-links">
           {["About", "Skills", "Projects", "Certifications", "Experience", "Contact", "Mail"].map(n => (
             <li key={n}><a href={`#${n.toLowerCase()}`}>{n}</a></li>
