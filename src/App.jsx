@@ -3,11 +3,13 @@ import PHOTO_SRC from "./assets/1721958609144.jpg";
 import PROJ_IMG_1 from "./assets/1.jpg";
 import PROJ_IMG_2 from "./assets/2.jpg";
 import PROJ_IMG_3 from "./assets/3.jpg";
-import PROJ_IMG_4 from "./assets/4.jpg";
 import RESUME_PDF from "./assets/General.pdf";
 import CERT_IMG_1 from "./assets/cert1.jpg";
 import CERT_IMG_2 from "./assets/cert2.jpg";
 import CERT_IMG_3 from "./assets/cert3.jpg";
+import CERT_IMG_4 from "./assets/cert4.jpg";
+import CERT_IMG_5 from "./assets/cert5.jpg";
+import CERT_IMG_6 from "./assets/cert6.jpg";
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
@@ -217,92 +219,7 @@ const styles = `
     background: linear-gradient(160deg, rgba(0,255,231,0.08) 0%, transparent 35%, rgba(0,0,15,0.3) 100%);
     pointer-events: none; z-index: 3;
   }
-  /* Cosmic spinning rings on hero photo */
-  .hero-cosmic-ring-outer {
-    position: absolute; inset: -38px; border-radius: 50%;
-    border: 2px solid transparent;
-    background: linear-gradient(var(--bg), var(--bg)) padding-box,
-      conic-gradient(from 0deg, var(--neon), transparent 30%, var(--neon2), transparent 65%, var(--neon3), transparent 85%, var(--neon)) border-box;
-    animation: cosmicSpin 7s linear infinite;
-    pointer-events: none; z-index: 1;
-  }
-  .hero-cosmic-ring-mid {
-    position: absolute; inset: -22px; border-radius: 50%;
-    border: 1px solid transparent;
-    background: linear-gradient(var(--bg), var(--bg)) padding-box,
-      conic-gradient(from 180deg, var(--neon2), transparent 40%, var(--neon), transparent 80%) border-box;
-    animation: cosmicSpin 11s linear infinite reverse;
-    pointer-events: none; z-index: 1;
-  }
-  .hero-cosmic-ring-inner {
-    position: absolute; inset: -10px; border-radius: 50%;
-    border: 1px dashed rgba(0,255,231,0.25);
-    animation: cosmicSpin 14s linear infinite;
-    pointer-events: none; z-index: 1;
-  }
-  .hero-cosmic-orbit {
-    position: absolute; inset: -44px; border-radius: 50%;
-    animation: cosmicSpin 8s linear infinite;
-    pointer-events: none; z-index: 3;
-  }
-  .hero-cosmic-orbit::before, .hero-cosmic-orbit::after {
-    content: ''; position: absolute; border-radius: 50%;
-  }
-  .hero-cosmic-orbit::before {
-    width: 10px; height: 10px;
-    background: var(--neon);
-    box-shadow: 0 0 12px 3px var(--neon), 0 0 24px var(--neon);
-    top: 2px; left: 50%; transform: translateX(-50%);
-  }
-  .hero-cosmic-orbit::after {
-    width: 7px; height: 7px;
-    bottom: 2px; left: 50%; transform: translateX(-50%);
-    background: var(--neon2);
-    box-shadow: 0 0 10px 2px var(--neon2), 0 0 22px var(--neon2);
-  }
-  .hero-cosmic-orbit2 {
-    position: absolute; inset: -44px; border-radius: 50%;
-    animation: cosmicSpin 13s linear infinite reverse;
-    pointer-events: none; z-index: 3;
-  }
-  .hero-cosmic-orbit2::before {
-    content: ''; position: absolute; width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--neon3);
-    box-shadow: 0 0 10px 2px var(--neon3), 0 0 20px var(--neon3);
-    top: 50%; right: 2px; transform: translateY(-50%);
-  }
-  .hero-cosmic-glow {
-    position: absolute; inset: -20px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,255,231,0.18) 0%, rgba(255,45,120,0.09) 45%, transparent 68%);
-    animation: haloBreath 3.5s ease-in-out infinite alternate;
-    pointer-events: none; z-index: 0;
-  }
-  .hero-cosmic-aurora {
-    position: absolute; inset: -55px; border-radius: 50%;
-    background: conic-gradient(from 0deg,
-      transparent 0%,
-      rgba(0,255,231,0.06) 15%,
-      transparent 30%,
-      rgba(255,45,120,0.05) 50%,
-      transparent 65%,
-      rgba(255,230,0,0.04) 80%,
-      transparent 100%
-    );
-    animation: cosmicSpin 20s linear infinite;
-    pointer-events: none; z-index: 0;
-    filter: blur(8px);
-  }
-  .grid-overlay {
-    position: absolute; inset: -10px;
-    background-image: linear-gradient(rgba(0,255,231,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,231,0.06) 1px, transparent 1px);
-    background-size: 28px 28px;
-    animation: gridPulse 4s ease-in-out infinite;
-    border-radius: 50%; pointer-events: none; z-index: 1;
-    mask-image: radial-gradient(circle, rgba(0,0,0,0.5) 60%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.5) 60%, transparent 80%);
-  }
+
 
   /* RESUME DOWNLOAD BUTTON (below hero photo) */
   .hero-resume-btn {
@@ -515,10 +432,23 @@ const styles = `
 
   /* CERTIFICATIONS */
   .certifications { padding: 120px 90px; }
-  .cert-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  .cert-scroll-wrapper {
+    position: relative;
     margin-top: 60px;
   }
+  .cert-grid {
+    display: flex; flex-direction: row; gap: 20px;
+    overflow-x: auto; overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,45,120,0.4) rgba(255,45,120,0.07);
+  }
+  .cert-grid::-webkit-scrollbar { height: 4px; }
+  .cert-grid::-webkit-scrollbar-track { background: rgba(255,45,120,0.07); border-radius: 2px; }
+  .cert-grid::-webkit-scrollbar-thumb { background: rgba(255,45,120,0.4); border-radius: 2px; }
+  .cert-grid::-webkit-scrollbar-thumb:hover { background: var(--neon2); }
   .cert-card {
     background: rgba(10,10,18,0.85);
     border: 1px solid var(--border);
@@ -526,6 +456,8 @@ const styles = `
     position: relative; overflow: hidden;
     transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
     display: flex; flex-direction: column;
+    flex: 0 0 320px;
+    scroll-snap-align: start;
   }
   .cert-card:hover {
     border-color: var(--neon2); transform: translateY(-8px);
@@ -824,27 +756,51 @@ const SKILLS = {
 const CERTIFICATIONS = [
   {
     num: "C01",
-    title: "Geo-data Sharing and Cyber Security",
-    issuer: "ISRO / IIRS, Dehradun",
-    date: "Issued: Dec 2023  |  Duration: 28 Nov - 11 Dec 2023  |  15 Hours",
-    tags: ["Cyber Security", "Geo-data", "ISRO"],
-    img: CERT_IMG_1, link: "https://drive.google.com/file/d/107navbiLhJFyzMM3n0jW2d4S3PoTwpM3/view",
+    title: "Computational Theory: Language Principle & Finite Automata Theory",
+    issuer: "Infosys Springboard",
+    date: "Issued: Dec 12, 2025  |  Completed: Dec 11, 2025",
+    tags: ["Computational Theory", "Finite Automata", "Infosys"],
+    img: CERT_IMG_6, link: "#",
   },
   {
     num: "C02",
-    title: "C Programming Language",
-    issuer: "CSE Pathshala",
-    date: "Issued: 11 Aug 2025  |  Cert No: CP-20250607-RCPL-008",
-    tags: ["C Programming", "Live Training", "35+ Hours"],
-    img: CERT_IMG_2, link: "https://drive.google.com/file/d/1WrTt-hZVu7Br5l0QWsX5ToEJuueVN4VI/view",  
+    title: "Red Hat System Administration II (RH134 - RHA) - Ver. 8.2",
+    issuer: "Red Hat",
+    date: "Issued: Jul 17, 2025  |  Credit Hours: 40",
+    tags: ["Red Hat", "Linux", "System Administration", "40 Hours"],
+    img: CERT_IMG_1, link: "https://www.credly.com/badges/6e712664-77ab-436d-a823-6996989a7794",
   },
   {
     num: "C03",
+    title: "Java Programming",
+    issuer: "LPU / iamneo",
+    date: "Issued: May 05, 2025  |  Duration: Jan – May 2025  |  72 Hours  |  Cert No: 15be50f8Ag0Ah0Bi1B11",
+    tags: ["Java", "Programming", "72 Hours"],
+    img: CERT_IMG_4, link: "#",
+  },
+  {
+    num: "C04",
     title: "Data Structures and Algorithm",
     issuer: "LPU / iamneo",
-    date: "Issued: 05 Dec 2024  |  Duration: Aug - Dec 2024  |  72 Hours",
+    date: "Issued: Dec 05, 2024  |  Duration: Aug 12 – Dec 02, 2024  |  72 Hours  |  Cert No: 19Ai0519B61BJ10K8",
     tags: ["DSA", "Algorithms", "72 Hours"],
-    img: CERT_IMG_3, link: "https://drive.google.com/file/d/1nyT_sJrNlvG3btbmSKeY5zyU7OvoXjTI/view", 
+    img: CERT_IMG_3, link: "https://drive.google.com/file/d/1nyT_sJrNlvG3btbmSKeY5zyU7OvoXjTI/view",
+  },
+  {
+    num: "C05",
+    title: "Object Oriented Programming",
+    issuer: "LPU / iamneo",
+    date: "Issued: Dec 05, 2024  |  Duration: Aug 12 – Dec 02, 2024  |  72 Hours  |  Cert No: 30D235795N9CO2dP7",
+    tags: ["OOP", "Programming", "72 Hours"],
+    img: CERT_IMG_5, link: "#",
+  },
+  {
+    num: "C06",
+    title: "Mastering in C: Basic to Beyond",
+    issuer: "CSE Pathshala",
+    date: "Issued: Mar 25, 2024  |  Duration: Feb 22 – Mar 23, 2024  |  25 Hours  |  Cert No: CP-20240203-CP015",
+    tags: ["C Programming", "Live Training", "25 Hours"],
+    img: CERT_IMG_2, link: "#",
   },
 ];
 
@@ -866,12 +822,6 @@ const PROJECTS = [
     desc: "Password strength auditor and hash cracking framework using wordlists, rules, and GPU acceleration. Built for security assessments and awareness training.",
     tags: ["Python", "Hashcat", "John the Ripper", "Bash"],
     img: PROJ_IMG_3,
-  },
-  {
-    num: "004", title: "NetGuard — IDS Dashboard",
-    desc: "Snort-based intrusion detection system with a custom web dashboard for real-time traffic analysis, alert classification, and incident reporting.",
-    tags: ["Snort", "Python", "React", "Wireshark"],
-    img: PROJ_IMG_4,
   },
 ];
 
@@ -1206,63 +1156,6 @@ function MailSection() {
 }
 
 
-function CosmicStarRing() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W = 340, H = 340;
-    canvas.width = W; canvas.height = H;
-    const cx = W / 2, cy = H / 2;
-
-    const stars = Array.from({ length: 60 }, (_, i) => ({
-      angle: (i / 60) * Math.PI * 2 + Math.random() * 0.3,
-      r: 148 + (Math.random() - 0.5) * 28,
-      size: Math.random() * 2.2 + 0.5,
-      speed: (Math.random() * 0.3 + 0.15) * (Math.random() > 0.5 ? 1 : -1) * 0.008,
-      color: ['#00ffe7','#ff2d78','#ffe600','#ffffff','#7b2fff'][Math.floor(Math.random() * 5)],
-      alpha: Math.random() * 0.6 + 0.4,
-      twinkle: Math.random() * Math.PI * 2,
-      twinkleSpeed: Math.random() * 0.05 + 0.02,
-    }));
-
-    let animId;
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      stars.forEach(s => {
-        s.angle += s.speed;
-        s.twinkle += s.twinkleSpeed;
-        const x = cx + Math.cos(s.angle) * s.r;
-        const y = cy + Math.sin(s.angle) * s.r;
-        const alpha = s.alpha * (0.55 + 0.45 * Math.sin(s.twinkle));
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.shadowColor = s.color;
-        ctx.shadowBlur = s.size * 5;
-        ctx.fillStyle = s.color;
-        ctx.beginPath();
-        ctx.arc(x, y, s.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-      animId = requestAnimationFrame(draw);
-    }
-    draw();
-    return () => cancelAnimationFrame(animId);
-  }, []);
-
-  return (
-    <canvas
-      ref={ref}
-      style={{
-        position: 'absolute', inset: 0, width: '340px', height: '340px',
-        pointerEvents: 'none', zIndex: 4, borderRadius: '50%',
-      }}
-    />
-  );
-}
-
 export default function Portfolio() {
   const typing = useTypingEffect(TYPING_STRINGS);
   useReveal();
@@ -1325,7 +1218,7 @@ export default function Portfolio() {
       <nav>
         <div className="nav-logo">P<span>.</span>Kumar</div>
         <ul className="nav-links">
-          {["About", "Skills", "Projects", "Certifications", "Experience", "Contact", "Mail"].map(n => (
+          {["About", "Skills", "Projects", "Certifications", "Experience", "Contact"].map(n => (
             <li key={n}><a href={`#${n.toLowerCase()}`}>{n}</a></li>
           ))}
         </ul>
@@ -1350,15 +1243,6 @@ export default function Portfolio() {
         <div className="hero-deco">
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div className="glitch-box">
-              <div className="hero-cosmic-aurora" />
-              <div className="hero-cosmic-glow" />
-              <div className="hero-cosmic-ring-outer" />
-              <div className="hero-cosmic-ring-mid" />
-              <div className="hero-cosmic-ring-inner" />
-              <div className="hero-cosmic-orbit" />
-              <div className="hero-cosmic-orbit2" />
-              <div className="grid-overlay" />
-              <CosmicStarRing />
               <div className="hero-photo-frame">
                 <img src={PHOTO_SRC} alt="Piyush Kumar" />
               </div>
@@ -1471,7 +1355,8 @@ export default function Portfolio() {
           <div className="section-label">Credentials</div>
           <h2 className="section-title">Certifications &<br /><span style={{ color: "var(--neon2)" }}>Achievements.</span></h2>
         </div>
-        <div className="cert-grid">
+        <div className="cert-scroll-wrapper">
+          <div className="cert-grid">
           {CERTIFICATIONS.map((c, i) => (
             <div className="cert-card reveal" key={c.num} style={{ transitionDelay: `${i * 0.1}s` }}>
               <div
@@ -1492,10 +1377,9 @@ export default function Portfolio() {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </section>
-
-      {/* EXPERIENCE */}
       <section className="experience" id="experience">
         <div className="reveal">
           <div className="section-label">Career Path</div>
