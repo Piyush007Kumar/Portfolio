@@ -437,11 +437,14 @@ const styles = `
     margin-top: 60px;
   }
   .cert-grid {
-    display: flex; flex-direction: row; gap: 20px;
-    overflow-x: auto; overflow-y: visible;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: visible;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 20px;
+    padding-bottom: 16px;
     scrollbar-width: thin;
     scrollbar-color: rgba(255,45,120,0.4) rgba(255,45,120,0.07);
   }
@@ -449,6 +452,11 @@ const styles = `
   .cert-grid::-webkit-scrollbar-track { background: rgba(255,45,120,0.07); border-radius: 2px; }
   .cert-grid::-webkit-scrollbar-thumb { background: rgba(255,45,120,0.4); border-radius: 2px; }
   .cert-grid::-webkit-scrollbar-thumb:hover { background: var(--neon2); }
+  .cert-grid .cert-card {
+    flex: 0 0 calc(25% - 15px);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
   .cert-card {
     background: rgba(10,10,18,0.85);
     border: 1px solid var(--border);
@@ -456,8 +464,7 @@ const styles = `
     position: relative; overflow: hidden;
     transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
     display: flex; flex-direction: column;
-    flex: 0 0 320px;
-    scroll-snap-align: start;
+
   }
   .cert-card:hover {
     border-color: var(--neon2); transform: translateY(-8px);
@@ -523,6 +530,7 @@ const styles = `
     background: rgba(255,45,120,0.10);
     border: 1px solid rgba(255,45,120,0.40);
     color: var(--neon2);
+    cursor: pointer; width: 100%; box-sizing: border-box;
   }
   .cert-link-btn:hover {
     background: var(--neon2); color: #000;
@@ -530,7 +538,7 @@ const styles = `
   }
 
   /* EXPERIENCE */
-  .experience { padding: 120px 90px; }
+  .experience { padding: 120px 90px; text-align: left; }
   .timeline { position: relative; margin-top: 60px; padding-left: 40px; }
   .timeline::before {
     content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
@@ -725,7 +733,7 @@ const styles = `
     .projects-grid { grid-template-columns: 1fr; }
     .project-card.featured { grid-column: span 1; }
     .certifications { padding: 80px 28px; }
-    .cert-grid { grid-template-columns: 1fr; }
+    .cert-grid .cert-card { flex: 0 0 85vw; }
     .experience { padding: 80px 28px; }
     .contact { padding: 80px 28px; }
     .contact-mail-row { flex-direction: column; }
@@ -1357,26 +1365,21 @@ export default function Portfolio() {
         </div>
         <div className="cert-scroll-wrapper">
           <div className="cert-grid">
-          {CERTIFICATIONS.map((c, i) => (
-            <div className="cert-card reveal" key={c.num} style={{ transitionDelay: `${i * 0.1}s` }}>
-              <div
-                className="cert-preview"
-                onClick={() => setPreviewImg(c.img)}
-                style={{ cursor: "zoom-in" }}
-              >
-                <img src={c.img} alt={c.title} />
-                <div className="cert-preview-overlay" />
-
+            {CERTIFICATIONS.map((c, i) => (
+              <div className="cert-card reveal" key={c.num} style={{ transitionDelay: `${i * 0.1}s` }}>
+                <div className="cert-preview" onClick={() => setPreviewImg(c.img)} style={{ cursor: "zoom-in" }}>
+                  <img src={c.img} alt={c.title} />
+                  <div className="cert-preview-overlay" />
+                </div>
+                <div className="cert-card-content">
+                  <div className="cert-issuer">{c.issuer}</div>
+                  <h3 className="cert-title">{c.title}</h3>
+                  <div className="cert-date">{c.date}</div>
+                  <div className="cert-tags">{c.tags.map(t => <span className="cert-tag" key={t}>{t}</span>)}</div>
+                  <button className="cert-link-btn" onClick={() => setPreviewImg(c.img)}>⌥ View Certificate →</button>
+                </div>
               </div>
-              <div className="cert-card-content">
-                <div className="cert-issuer">{c.issuer}</div>
-                <h3 className="cert-title">{c.title}</h3>
-                <div className="cert-date">{c.date}</div>
-                <div className="cert-tags">{c.tags.map(t => <span className="cert-tag" key={t}>{t}</span>)}</div>
-                <a href={c.link} className="cert-link-btn" target="_blank" rel="noopener noreferrer">⌥ View Certificate →</a>
-              </div>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
       </section>
