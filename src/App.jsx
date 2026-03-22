@@ -818,24 +818,30 @@ const PROJECTS = [
     desc: "Custom-built network reconnaissance tool that automates subdomain enumeration, port scanning, and vulnerability fingerprinting. Designed for bug bounty and CTF workflows.",
     tags: ["Python", "Nmap", "Shodan API", "OSINT", "Linux"],
     featured: true, img: PROJ_IMG_1,
+    live: "https://piyush007kumar.github.io/secure-master/",
+    github: "https://github.com/Piyush007Kumar/secure-master",
   },
   {
-    num: "002", title: "HoneyGrid — Honeypot Network",
-    desc: "Deployed a distributed honeypot network to capture and analyze attacker TTPs. Includes real-time alerting dashboard and threat intelligence logging.",
-    tags: ["Python", "Docker", "ELK Stack", "Cowrie"],
+    num: "002", title: "AI Chatbot for Dungeons & Dragons",
+    desc: "An AI-powered chatbot built for Dungeons & Dragons players. Helps with lore, rules, character building, and dungeon master assistance — bringing the world of D&D to life through intelligent conversation.",
+    tags: ["AI", "Chatbot", "JavaScript", "D&D"],
     img: PROJ_IMG_2,
+    live: "https://piyush007kumar.github.io/chatbot1/",
+    github: "https://github.com/Piyush007Kumar/chatbot1",
   },
   {
-    num: "003", title: "CipherVault — Password Audit Tool",
-    desc: "Password strength auditor and hash cracking framework using wordlists, rules, and GPU acceleration. Built for security assessments and awareness training.",
-    tags: ["Python", "Hashcat", "John the Ripper", "Bash"],
+    num: "003", title: "Plant Detection Website",
+    desc: "A web-based plant detection tool that identifies plant species from images using machine learning. Provides detailed information about the detected plant including care tips, habitat, and characteristics.",
+    tags: ["Machine Learning", "Python", "HTML/CSS", "Computer Vision"],
     img: PROJ_IMG_3,
+    live: "https://piyush007kumar.github.io/CHE-110/",
+    github: "https://github.com/Piyush007Kumar/CHE-110",
   },
 ];
 
 const EXPERIENCE = [
   {
-    date: "2024 — Present",
+    date: "2023 — Present",
     role: "B.Tech in Computer Science (Cyber Security)",
     company: "Lovely Professional University · Punjab, India",
     desc: "Pursuing a Bachelor's degree with specialization in Cyber Security. Studying network security, ethical hacking, cryptography, and digital forensics while participating in CTF competitions and building security tools."
@@ -843,13 +849,13 @@ const EXPERIENCE = [
   {
     date: "2021 — 2023",
     role: "Higher Secondary Education (Class XII)",
-    company: "Shri Rani Saraswati Vidya Mandir · Bihar, India",
+    company: "Trimurti College · Bihar, India",
     desc: "Completed higher secondary education with focus on Mathematics and logical reasoning, which built a strong analytical foundation for cyber security and systems thinking."
   },
   {
     date: "2019 — 2021",
     role: "Secondary Education (Class X)",
-    company: "Shri Rani Saraswati Vidya Mandir · Bihar, India",
+    company: "St. Joseph High School · Bihar, India",
     desc: "Completed secondary education while developing early interest in computers, networking, and how digital systems work — sparking curiosity that led to a career in security."
   }
 ];
@@ -1083,6 +1089,10 @@ function useCursor() {
   return { dot, ring };
 }
 
+const EMAILJS_SERVICE_ID  = "service_whz27zw";
+const EMAILJS_TEMPLATE_ID = "template_tr12xu6";
+const EMAILJS_PUBLIC_KEY  = "S_KGj0txCYgoeQDc_";
+
 function MailSection() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [status, setStatus] = useState("");
@@ -1101,11 +1111,33 @@ function MailSection() {
     }
     setLoading(true);
     setStatus("");
-    // Simulate sending (replace with real API call e.g. EmailJS, Resend, etc.)
-    await new Promise(r => setTimeout(r, 1400));
+    try {
+      const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id:  EMAILJS_SERVICE_ID,
+          template_id: EMAILJS_TEMPLATE_ID,
+          user_id:     EMAILJS_PUBLIC_KEY,
+          template_params: {
+            from_name:  form.name,
+            from_email: form.email,
+            reply_to:   form.email,
+            subject:    form.subject || "Portfolio Contact",
+            message:    form.message,
+          },
+        }),
+      });
+      if (res.ok) {
+        setStatus("success:Message sent! I'll get back to you soon.");
+        setForm({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error:Failed to send. Please try again.");
+      }
+    } catch {
+      setStatus("error:Network error. Please try again.");
+    }
     setLoading(false);
-    setStatus("success:Message sent! I'll get back to you soon.");
-    setForm({ name: "", email: "", subject: "", message: "" });
   };
 
   const [statusType, statusMsg] = status.includes(":") ? status.split(":") : ["", status];
@@ -1126,7 +1158,7 @@ function MailSection() {
           <div className="mail-field">
             <label className="mail-label">Name *</label>
             <input
-              className="mail-input" name="name" placeholder="Piyush Kumar"
+              className="mail-input" name="name" placeholder="Your Name"
               value={form.name} onChange={handleChange}
             />
           </div>
@@ -1348,8 +1380,8 @@ export default function Portfolio() {
                 <p className="project-desc">{p.desc}</p>
                 <div className="project-tags">{p.tags.map(t => <span className="tag" key={t}>{t}</span>)}</div>
                 <div className="project-links">
-                  <a href="#" className="project-link-btn live">▶ Go Live</a>
-                  <a href="#" className="project-link-btn github">⌥ View on GitHub →</a>
+                  <a href={p.live || "#"} className="project-link-btn live" target={p.live ? "_blank" : undefined} rel="noopener noreferrer">▶ Go Live</a>
+                  <a href={p.github || "#"} className="project-link-btn github" target={p.github ? "_blank" : undefined} rel="noopener noreferrer">⌥ View on GitHub →</a>
                 </div>
               </div>
             </div>
@@ -1411,9 +1443,9 @@ export default function Portfolio() {
             </h2>
             <p className="contact-sub">Currently open to security roles, bug bounty &amp; freelance assessments.</p>
             <div className="contact-links">
-              <a href="mailto:piyushkumar@example.com" className="contact-link">✉ piyushkumar@example.com</a>
-              <a href="https://www.linkedin.com/in/piyushkumar/" className="contact-link">⌥ LinkedIn</a>
-              <a href="https://github.com/piyushkumar" className="contact-link">◎ GitHub</a>
+              <a href="mailto:kumarpiyush2k19@gmail.com" className="contact-link">✉ kumarpiyush2k19@gmail.com</a>
+              <a href="https://www.linkedin.com/in/p-kr/" className="contact-link">⌥ LinkedIn</a>
+              <a href="https://github.com/Piyush007Kumar" className="contact-link">◎ GitHub</a>
               <a href={RESUME_PDF} download="Piyush_Kumar_Resume.pdf" className="contact-link">↓ Download Resume</a>
             </div>
           </div>
